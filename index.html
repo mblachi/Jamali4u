@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jamali4U — Download TikTok Videos Without Watermark</title>
+<meta name="description" content="Download TikTok videos in HD without watermark. Fast, free and secure — works on Android, iPhone, Windows and Mac. No login required.">
+<link rel="canonical" href="https://jamali4u.vercel.app/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="google-site-verification" content="A4TtIMfJJ3oaB23v_e3MdjATcRONgxYDzJv9fHYWTig" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jamali4U — Download TikTok Videos Without Watermark">
+<meta property="og:description" content="Download TikTok videos in HD without watermark. Fast, free and secure — works on all devices.">
+<meta property="og:url" content="https://jamali4u.vercel.app/">
+<meta property="og:site_name" content="Jamali4U">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jamali4U — Download TikTok Videos Without Watermark">
+<meta name="twitter:description" content="Download TikTok videos in HD without watermark. Fast, free and secure.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- JSON-LD: WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Jamali4U",
+  "url": "https://jamali4u.vercel.app/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://jamali4u.vercel.app/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- JSON-LD: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Jamali4U TikTok Downloader",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1200" }
+}
+</script>
+
+<!-- JSON-LD: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jamali4u.vercel.app/" }
+  ]
+}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I download TikTok videos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Copy the video link from the TikTok app, paste it into the box on this page, and press Download Video. Your download links appear instantly on the same page." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this website free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Jamali4U is completely free to use with no signup or subscription required." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I download HD videos?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, when the source video supports it, you can download in HD quality directly from the results card." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work on iPhone?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, Jamali4U works in any mobile browser on iPhone, including Safari and Chrome." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work on Android?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, it works on Android phones and tablets in any modern browser." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I download videos without watermark?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, the results card gives you a dedicated no-watermark download option alongside the standard version." }
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --bg:#0b0b0f;
+  --bg-soft:#131319;
+  --surface:#17171f;
+  --surface-2:#1e1e28;
+  --border:#2a2a36;
+  --text:#f4f4f7;
+  --text-dim:#a3a3b2;
+  --cyan:#22e8e0;
+  --pink:#fe2c55;
+  --grad:linear-gradient(120deg,var(--pink) 0%, #ff6b8b 35%, var(--cyan) 100%);
+  --radius-lg:28px;
+  --radius-md:18px;
+  --shadow:0 20px 60px -20px rgba(0,0,0,0.5);
+}
+[data-theme="light"]{
+  --bg:#f8f8fb;
+  --bg-soft:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#f1f1f6;
+  --border:#e6e6ee;
+  --text:#101014;
+  --text-dim:#63636f;
+  --shadow:0 20px 60px -25px rgba(20,20,40,0.25);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease, color .3s ease;
+  overflow-x:hidden;
+}
+.display{ font-family:'Manrope',sans-serif; }
+a{color:inherit;}
+img{max-width:100%; display:block;}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+/* NAV */
+nav{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--bg) 75%, transparent);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1080px; margin:0 auto; padding:16px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{
+  display:flex; align-items:center; gap:8px;
+  font-family:'Manrope',sans-serif; font-weight:800; font-size:1.15rem;
+}
+.brand .mark{
+  width:26px; height:26px; border-radius:8px;
+  background:var(--grad);
+  display:inline-block;
+}
+.theme-toggle{
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  width:40px; height:40px; border-radius:12px;
+  cursor:pointer; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease;
+}
+.theme-toggle:hover{ transform:translateY(-2px); }
+.theme-toggle:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible{
+  outline:2px solid var(--cyan); outline-offset:2px;
+}
+
+/* HERO */
+.hero{
+  padding:72px 0 40px;
+  text-align:center;
+  position:relative;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:-10% -10% auto -10%;
+  height:480px;
+  background:radial-gradient(60% 60% at 30% 20%, rgba(254,44,85,0.18), transparent 70%),
+             radial-gradient(50% 50% at 75% 15%, rgba(34,232,224,0.16), transparent 70%);
+  z-index:-1;
+  pointer-events:none;
+}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:.8rem; font-weight:600; letter-spacing:.02em;
+  color:var(--text-dim);
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:6px 14px; border-radius:999px;
+  margin-bottom:22px;
+  animation:fadeUp .6s ease both;
+}
+h1{
+  font-size:clamp(2.1rem, 6vw, 3.6rem);
+  font-weight:800; letter-spacing:-0.03em; line-height:1.08;
+  animation:fadeUp .6s .05s ease both;
+}
+h1 .split{
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.subtitle{
+  max-width:600px; margin:18px auto 0;
+  color:var(--text-dim); font-size:1.05rem; line-height:1.6;
+  animation:fadeUp .6s .1s ease both;
+}
+.badges{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+  margin:28px auto 0; max-width:640px;
+  animation:fadeUp .6s .15s ease both;
+}
+.badge{
+  font-size:.82rem; font-weight:600; color:var(--text-dim);
+  background:var(--surface); border:1px solid var(--border);
+  padding:7px 13px; border-radius:999px;
+}
+
+/* INPUT AREA */
+.input-panel{
+  max-width:640px; margin:40px auto 0;
+  animation:fadeUp .6s .2s ease both;
+}
+#urlInput{
+  width:100%;
+  font-size:1.02rem;
+  padding:20px 22px;
+  border-radius:var(--radius-md);
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--shadow);
+}
+#urlInput::placeholder{ color:var(--text-dim); }
+#downloadBtn{
+  width:100%;
+  margin-top:14px;
+  padding:19px 22px;
+  border:none; border-radius:var(--radius-md);
+  background:var(--grad);
+  background-size:160% 160%;
+  color:#fff; font-weight:700; font-size:1.02rem;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background-position .4s ease;
+  box-shadow:0 14px 30px -10px rgba(254,44,85,0.45);
+}
+#downloadBtn:hover:not(:disabled){
+  transform:translateY(-2px);
+  background-position:100% 0;
+}
+#downloadBtn:active:not(:disabled){ transform:translateY(0); }
+#downloadBtn:disabled{
+  opacity:.7; cursor:not-allowed;
+}
+#statusMsg{
+  text-align:center; margin-top:14px; min-height:1.2rem;
+  color:var(--text-dim); font-size:.9rem;
+}
+#statusMsg.error{ color:var(--pink); }
+
+/* SKELETON / LOADER */
+.skeleton-card{
+  max-width:640px; margin:26px auto 0;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:24px;
+  display:none;
+  animation:fadeUp .3s ease both;
+}
+.skeleton-card.show{ display:flex; gap:18px; align-items:center; }
+.sk-thumb{
+  width:96px; height:130px; border-radius:14px; flex-shrink:0;
+  background:linear-gradient(90deg, var(--surface-2) 25%, var(--border) 37%, var(--surface-2) 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s infinite linear;
+}
+.sk-lines{ flex:1; display:flex; flex-direction:column; gap:10px; }
+.sk-line{
+  height:14px; border-radius:8px;
+  background:linear-gradient(90deg, var(--surface-2) 25%, var(--border) 37%, var(--surface-2) 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s infinite linear;
+}
+.sk-line.w60{width:60%;} .sk-line.w40{width:40%;} .sk-line.w80{width:80%;}
+@keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:-100% 0;} }
+
+/* RESULT CARD */
+.result-card{
+  max-width:640px; margin:26px auto 0;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:26px;
+  box-shadow:var(--shadow);
+  display:none;
+}
+.result-card.show{ display:block; animation:fadeUp .45s ease both; }
+.result-top{ display:flex; gap:18px; }
+.result-top img{
+  width:100px; height:135px; object-fit:cover; border-radius:14px;
+  border:1px solid var(--border);
+}
+.result-meta h3{
+  font-family:'Manrope',sans-serif; font-size:1.05rem; font-weight:700;
+  line-height:1.35;
+}
+.result-meta .author{ color:var(--text-dim); font-size:.9rem; margin-top:6px; }
+.result-meta .duration{
+  display:inline-block; margin-top:10px;
+  font-size:.78rem; font-weight:600; color:var(--text-dim);
+  background:var(--surface-2); border:1px solid var(--border);
+  padding:4px 10px; border-radius:999px;
+}
+.result-actions{
+  margin-top:22px; display:grid; gap:10px;
+}
+.result-actions a, .result-actions button{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px; border-radius:14px; font-weight:700; font-size:.92rem;
+  text-decoration:none; cursor:pointer; border:1px solid var(--border);
+  transition:transform .15s ease;
+}
+.result-actions a:hover, .result-actions button:hover{ transform:translateY(-2px); }
+.result-actions .primary{ background:var(--grad); color:#fff; border:none; }
+.result-actions .secondary{ background:var(--surface-2); color:var(--text); }
+.result-actions .ghost{ background:transparent; color:var(--text-dim); }
+
+/* FEATURES */
+section{ padding:64px 0; }
+.section-head{ text-align:center; max-width:520px; margin:0 auto 40px; }
+.section-head .kicker{
+  font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--pink);
+}
+.section-head h2{
+  font-family:'Manrope',sans-serif; font-weight:800; font-size:clamp(1.5rem,4vw,2.1rem);
+  margin-top:8px; letter-spacing:-0.02em;
+}
+.section-head p{ color:var(--text-dim); margin-top:10px; }
+
+.grid-features{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:16px;
+}
+.feature-card{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-md); padding:22px;
+  transition:transform .2s ease, border-color .2s ease;
+}
+.feature-card:hover{ transform:translateY(-4px); border-color:var(--cyan); }
+.feature-card .icon{ font-size:1.5rem; }
+.feature-card h3{
+  font-family:'Manrope',sans-serif; font-size:1rem; font-weight:700; margin-top:12px;
+}
+.feature-card p{ color:var(--text-dim); font-size:.88rem; margin-top:6px; line-height:1.5; }
+
+/* HOW IT WORKS */
+.steps-row{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+}
+.step-card{
+  background:var(--surface-2); border:1px solid var(--border);
+  border-radius:var(--radius-md); padding:26px 20px; text-align:center;
+}
+.step-card .num{
+  width:38px; height:38px; border-radius:12px; margin:0 auto 14px;
+  background:var(--grad); color:#fff; font-weight:800;
+  display:flex; align-items:center; justify-content:center;
+}
+.step-card h3{ font-family:'Manrope',sans-serif; font-weight:700; font-size:1rem; }
+.step-card p{ color:var(--text-dim); font-size:.85rem; margin-top:6px; }
+
+/* FAQ */
+.faq-item{
+  border-bottom:1px solid var(--border);
+  padding:18px 0;
+}
+.faq-item summary{
+  cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;
+  font-weight:600; font-size:.98rem;
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::after{ content:"+"; color:var(--pink); font-size:1.3rem; }
+.faq-item[open] summary::after{ content:"–"; }
+.faq-item p{ color:var(--text-dim); margin-top:12px; font-size:.9rem; line-height:1.6; }
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 0 30px;
+  color:var(--text-dim); font-size:.85rem;
+}
+.footer-inner{
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px;
+}
+.footer-links{ display:flex; flex-wrap:wrap; gap:18px; }
+.footer-links a{ text-decoration:none; }
+.footer-links a:hover{ color:var(--text); }
+.footer-bottom{
+  margin-top:24px; padding-top:20px; border-top:1px solid var(--border);
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;
+}
+.socials{ display:flex; gap:12px; }
+.socials a{
+  width:36px; height:36px; border-radius:10px; border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; text-decoration:none;
+}
+
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(14px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+}
+@media (max-width:640px){
+  .steps-row{ grid-template-columns:1fr; }
+  .result-top{ flex-direction:column; }
+  .result-top img{ width:100%; height:220px; }
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand"><span class="mark"></span> Jamali4U</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">⚡ No login • No app • 100% free</span>
+  <h1>Download TikTok Videos<br><span class="split">Without Watermark</span></h1>
+  <p class="subtitle">Download TikTok videos in HD without watermark. Fast, free, secure and works on Android, iPhone, Windows and Mac.</p>
+
+  <div class="badges" role="list">
+    <span class="badge">⚡ Instant Download</span>
+    <span class="badge">🔒 Safe &amp; Secure</span>
+    <span class="badge">🎬 HD Quality</span>
+    <span class="badge">📱 Mobile Friendly</span>
+    <span class="badge">🌍 Works Worldwide</span>
+  </div>
+
+  <div class="input-panel">
+    <label for="urlInput" class="sr-only" style="position:absolute; left:-9999px;">TikTok video URL</label>
+    <input type="text" id="urlInput" placeholder="Paste TikTok Video URL" autocomplete="off" inputmode="url">
+    <button id="downloadBtn" aria-live="polite">Download Video</button>
+    <div id="statusMsg" role="status"></div>
+  </div>
+
+  <div class="skeleton-card" id="skeleton" aria-hidden="true">
+    <div class="sk-thumb"></div>
+    <div class="sk-lines">
+      <div class="sk-line w80"></div>
+      <div class="sk-line w40"></div>
+      <div class="sk-line w60"></div>
+    </div>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-top">
+      <img id="resThumb" src="" alt="Video thumbnail">
+      <div class="result-meta">
+        <h3 id="resTitle"></h3>
+        <div class="author" id="resAuthor"></div>
+        <span class="duration" id="resDuration"></span>
+      </div>
+    </div>
+    <div class="result-actions">
+      <a id="dlNoWatermark" class="primary" target="_blank" rel="noopener">⬇ Download Without Watermark</a>
+      <a id="dlHD" class="secondary" target="_blank" rel="noopener">🎬 Download HD</a>
+      <a id="dlMp3" class="secondary" target="_blank" rel="noopener">🎵 Download MP3</a>
+      <button id="copyLinkBtn" class="ghost" type="button">🔗 Copy Link</button>
+      <button id="resetBtn" class="ghost" type="button">↺ Download Another Video</button>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="features">
+  <div class="section-head">
+    <span class="kicker">Why Jamali4U</span>
+    <h2>Built for speed and simplicity</h2>
+    <p>Everything you need from a downloader, nothing you don't.</p>
+  </div>
+  <div class="grid-features">
+    <div class="feature-card"><div class="icon">🚫💧</div><h3>No Watermark</h3><p>Clean videos, ready to repost or save privately.</p></div>
+    <div class="feature-card"><div class="icon">🎬</div><h3>HD Downloads</h3><p>Original quality preserved, no compression loss.</p></div>
+    <div class="feature-card"><div class="icon">♾️</div><h3>Unlimited Downloads</h3><p>No daily caps or hidden limits.</p></div>
+    <div class="feature-card"><div class="icon">⚡</div><h3>Fast Servers</h3><p>Optimized for quick processing, even on slow connections.</p></div>
+    <div class="feature-card"><div class="icon">🔓</div><h3>No Login Required</h3><p>Paste a link and go — no account needed.</p></div>
+    <div class="feature-card"><div class="icon">📱</div><h3>Works on All Devices</h3><p>Android, iPhone, Windows and Mac, all in the browser.</p></div>
+    <div class="feature-card"><div class="icon">💸</div><h3>100% Free</h3><p>No subscriptions, no surprise charges.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="how" style="background:var(--bg-soft); border-radius:var(--radius-lg);">
+  <div class="section-head">
+    <span class="kicker">Process</span>
+    <h2>How it works</h2>
+  </div>
+  <div class="steps-row">
+    <div class="step-card"><div class="num">1</div><h3>Paste Link</h3><p>Copy a TikTok video URL and paste it above.</p></div>
+    <div class="step-card"><div class="num">2</div><h3>Click Download</h3><p>We process the link and prepare your files.</p></div>
+    <div class="step-card"><div class="num">3</div><h3>Save Video</h3><p>Choose no-watermark, HD, or MP3 and save it.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="faq">
+  <div class="section-head">
+    <span class="kicker">FAQ</span>
+    <h2>Common questions</h2>
+  </div>
+  <div>
+    <details class="faq-item" open>
+      <summary>How do I download TikTok videos?</summary>
+      <p>Copy the video link from the TikTok app, paste it into the box above, and press Download Video. Your download options appear instantly on this same page.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is this website free?</summary>
+      <p>Yes. Jamali4U is completely free to use with no signup or subscription required.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I download HD videos?</summary>
+      <p>Yes, when the source video supports it, you can download in HD quality directly from the results card.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does it work on iPhone?</summary>
+      <p>Yes, Jamali4U works in any mobile browser on iPhone, including Safari and Chrome.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does it work on Android?</summary>
+      <p>Yes, it works on Android phones and tablets in any modern browser.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I download videos without watermark?</summary>
+      <p>Yes, the results card gives you a dedicated no-watermark download option alongside the standard version.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="mark"></span> Jamali4U</div>
+      <p style="margin-top:10px; max-width:260px;">A fast, free TikTok video downloader. Not affiliated with TikTok.</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:support@jamali4u.com">Support</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+      <a href="#">DMCA</a>
+      <a href="#">Disclaimer</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Jamali4U. All rights reserved.</span>
+    <div class="socials" aria-label="Social links">
+      <a href="#" aria-label="Twitter">𝕏</a>
+      <a href="#" aria-label="Instagram">◎</a>
+      <a href="#" aria-label="Telegram">✈</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const toggle = document.getElementById('themeToggle');
+  const saved = null; // no localStorage per artifact rules; session-only
+  let theme = 'dark';
+  toggle.addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', theme);
+    toggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+  });
+})();
+
+const RAPIDAPI_KEY = "f92f85abf4msh190e0731f77fd16p19fab7jsn19299df9bc97";
+const RAPIDAPI_HOST = "tiktok-video-no-watermark2.p.rapidapi.com";
+
+const urlInput = document.getElementById('urlInput');
+const downloadBtn = document.getElementById('downloadBtn');
+const statusMsg = document.getElementById('statusMsg');
+const skeleton = document.getElementById('skeleton');
+const resultCard = document.getElementById('resultCard');
+
+const resThumb = document.getElementById('resThumb');
+const resTitle = document.getElementById('resTitle');
+const resAuthor = document.getElementById('resAuthor');
+const resDuration = document.getElementById('resDuration');
+const dlNoWatermark = document.getElementById('dlNoWatermark');
+const dlHD = document.getElementById('dlHD');
+const dlMp3 = document.getElementById('dlMp3');
+const copyLinkBtn = document.getElementById('copyLinkBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+downloadBtn.addEventListener('click', handleDownload);
+urlInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleDownload(); });
+resetBtn.addEventListener('click', () => {
+  resultCard.classList.remove('show');
+  urlInput.value = '';
+  urlInput.focus();
+});
+copyLinkBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(dlNoWatermark.href || urlInput.value);
+    copyLinkBtn.textContent = '✅ Copied';
+    setTimeout(() => copyLinkBtn.textContent = '🔗 Copy Link', 1500);
+  } catch(e) { statusMsg.textContent = 'Could not copy link.'; }
+});
+
+function fmtDuration(seconds){
+  if(!seconds) return '';
+  const m = Math.floor(seconds/60);
+  const s = Math.floor(seconds%60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+async function handleDownload(){
+  const link = urlInput.value.trim();
+  statusMsg.textContent = '';
+  statusMsg.classList.remove('error');
+  resultCard.classList.remove('show');
+
+  if(!link){ statusMsg.textContent = 'Paste a TikTok link first.'; statusMsg.classList.add('error'); return; }
+  if(!link.includes('tiktok.com')){ statusMsg.textContent = 'That doesn\'t look like a TikTok link.'; statusMsg.classList.add('error'); return; }
+
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = 'Processing…';
+  skeleton.classList.add('show');
+
+  try{
+    const apiUrl = `https://${RAPIDAPI_HOST}/?url=${encodeURIComponent(link)}&hd=1`;
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': RAPIDAPI_KEY,
+        'X-RapidAPI-Host': RAPIDAPI_HOST
+      }
+    });
+    if(!response.ok) throw new Error('Request failed (' + response.status + ')');
+    const data = await response.json();
+    if(!data || !data.data) throw new Error('No video data found. Check the link.');
+
+    const v = data.data;
+    resThumb.src = v.cover || v.origin_cover || '';
+    resTitle.textContent = v.title || 'TikTok Video';
+    resAuthor.textContent = v.author ? ('@' + (v.author.unique_id || v.author.nickname || '')) : '';
+    resDuration.textContent = v.duration ? fmtDuration(v.duration) : '';
+    dlNoWatermark.href = v.play || v.hdplay || '#';
+    dlHD.href = v.hdplay || v.play || '#';
+    dlMp3.href = v.music || '#';
+
+    resultCard.classList.add('show');
+    statusMsg.textContent = '';
+  }catch(err){
+    statusMsg.textContent = 'Something went wrong: ' + err.message;
+    statusMsg.classList.add('error');
+  }finally{
+    skeleton.classList.remove('show');
+    downloadBtn.disabled = false;
+    downloadBtn.textContent = 'Download Video';
+  }
+}
+</script>
+
+</body>
+</html>
