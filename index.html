@@ -328,10 +328,13 @@ h1 .split{
 }
 .result-actions a, .result-actions button{
   display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%;
   padding:14px; border-radius:14px; font-weight:700; font-size:.92rem;
+  font-family:'Inter',system-ui,sans-serif;
   text-decoration:none; cursor:pointer; border:1px solid var(--border);
-  transition:transform .15s ease;
+  transition:transform .15s ease, opacity .15s ease;
 }
+.result-actions button:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
 .result-actions a:hover, .result-actions button:hover{ transform:translateY(-2px); }
 .result-actions .primary{ background:var(--grad); color:#fff; border:none; }
 .result-actions .secondary{ background:var(--surface-2); color:var(--text); }
@@ -486,9 +489,9 @@ footer{
       </div>
     </div>
     <div class="result-actions">
-      <a id="dlNoWatermark" class="primary" target="_blank" rel="noopener">⬇ Download Without Watermark</a>
-      <a id="dlHD" class="secondary" target="_blank" rel="noopener">🎬 Download HD</a>
-      <a id="dlMp3" class="secondary" target="_blank" rel="noopener">🎵 Download MP3</a>
+      <button id="dlNoWatermark" class="primary" type="button">⬇ Download Without Watermark</button>
+      <button id="dlHD" class="secondary" type="button">🎬 Download HD</button>
+      <button id="dlMp3" class="secondary" type="button">🎵 Download MP3</button>
       <button id="copyLinkBtn" class="ghost" type="button">🔗 Copy Link</button>
       <button id="resetBtn" class="ghost" type="button">↺ Download Another Video</button>
     </div>
@@ -651,7 +654,8 @@ resetBtn.addEventListener('click', () => {
 });
 copyLinkBtn.addEventListener('click', async () => {
   try {
-    await navigator.clipboard.writeText(dlNoWatermark.href || urlInput.value);
+    // Copy the currently loaded video's source link (fallback to whatever is in the input)
+    await navigator.clipboard.writeText(currentVideo.noWatermarkUrl || urlInput.value);
     copyLinkBtn.textContent = '✅ Copied';
     setTimeout(() => copyLinkBtn.textContent = '🔗 Copy Link', 1500);
   } catch(e) { statusMsg.textContent = 'Could not copy link.'; }
@@ -663,6 +667,96 @@ function fmtDuration(seconds){
   const s = Math.floor(seconds%60).toString().padStart(2,'0');
   return `${m}:${s}`;
 }
+
+// Holds the URLs + metadata for the video currently shown in the result card,
+// so the download buttons always know what to fetch without re-calling the API.
+let currentVideo = { noWatermarkUrl: '', hdUrl: '', mp3Url: '', title: 'tiktok_video' };
+
+// Turns a video title into a safe filename (no slashes, quotes, emoji spam, etc.)
+function safeFilename(title, ext){
+  const base = (title || 'tiktok_video')
+    .replace(/[\\/:*?"<>|]/g, '')   // strip characters illegal in filenames
+    .replace(/\s+/g, '_')
+    .slice(0, 60) || 'tiktok_video';
+  const stamp = Date.now();
+  return `${base}_${stamp}.${ext}`;
+}
+
+/**
+ * Core download function.
+ * - Fetches the media as a Blob (so we control the exact bytes and MIME type)
+ * - Builds an in-memory object URL and triggers it via a hidden <a download> link
+ * - This never opens a new tab and never navigates the page away
+ * - Falls back to a same-tab direct navigation only if the fetch is blocked
+ *   (e.g. by CORS on the CDN), which still avoids window.open()/new tabs.
+ */
+async function downloadFile(url, filename, mimeFallback, triggerBtn){
+  if(!url || url === '#'){
+    statusMsg.textContent = 'This file is not available for this video.';
+    statusMsg.classList.add('error');
+    return;
+  }
+
+  const originalLabel = triggerBtn.textContent;
+  triggerBtn.disabled = true;
+  triggerBtn.textContent = 'Downloading…';
+  statusMsg.textContent = '';
+  statusMsg.classList.remove('error');
+
+  try{
+    const response = await fetch(url, { method: 'GET' });
+    if(!response.ok) throw new Error('Server returned ' + response.status);
+
+    const rawBlob = await response.blob();
+    // Force a correct, explicit MIME type so Android recognizes it as a real video/audio file
+    const typedBlob = new Blob([rawBlob], { type: rawBlob.type || mimeFallback });
+
+    const objectUrl = URL.createObjectURL(typedBlob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = filename;       // forces Save-As with correct extension, no navigation
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Free memory once the browser has handed off the file
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 4000);
+
+    statusMsg.textContent = 'Download started ✅';
+  }catch(err){
+    console.error('Blob download failed, falling back:', err);
+    // Fallback: same-tab anchor download (no window.open, no new tab).
+    // Works when the CDN blocks cross-origin fetch but still allows direct linking.
+    try{
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.rel = 'noopener';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      statusMsg.textContent = 'Download started ✅';
+    }catch(fallbackErr){
+      statusMsg.textContent = 'Download failed: ' + fallbackErr.message;
+      statusMsg.classList.add('error');
+    }
+  }finally{
+    triggerBtn.disabled = false;
+    triggerBtn.textContent = originalLabel;
+  }
+}
+
+dlNoWatermark.addEventListener('click', () => {
+  downloadFile(currentVideo.noWatermarkUrl, safeFilename(currentVideo.title, 'mp4'), 'video/mp4', dlNoWatermark);
+});
+dlHD.addEventListener('click', () => {
+  downloadFile(currentVideo.hdUrl, safeFilename(currentVideo.title + '_HD', 'mp4'), 'video/mp4', dlHD);
+});
+dlMp3.addEventListener('click', () => {
+  downloadFile(currentVideo.mp3Url, safeFilename(currentVideo.title + '_audio', 'mp3'), 'audio/mpeg', dlMp3);
+});
 
 async function handleDownload(){
   const link = urlInput.value.trim();
@@ -695,9 +789,15 @@ async function handleDownload(){
     resTitle.textContent = v.title || 'TikTok Video';
     resAuthor.textContent = v.author ? ('@' + (v.author.unique_id || v.author.nickname || '')) : '';
     resDuration.textContent = v.duration ? fmtDuration(v.duration) : '';
-    dlNoWatermark.href = v.play || v.hdplay || '#';
-    dlHD.href = v.hdplay || v.play || '#';
-    dlMp3.href = v.music || '#';
+
+    // Store the actual media URLs/metadata for the download buttons to use later.
+    // Nothing here navigates the page — it only fills in-memory state.
+    currentVideo = {
+      noWatermarkUrl: v.play || v.hdplay || '',
+      hdUrl: v.hdplay || v.play || '',
+      mp3Url: v.music || '',
+      title: v.title || 'tiktok_video'
+    };
 
     resultCard.classList.add('show');
     statusMsg.textContent = '';
