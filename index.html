@@ -10,6 +10,15 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b0b0f">
 <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+<!-- PWA: manifest + icons + platform meta tags -->
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jamali4U">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="google-site-verification" content="A4TtIMfJJ3oaB23v_e3MdjATcRONgxYDzJv9fHYWTig" />
 
 <!-- Open Graph -->
@@ -181,7 +190,7 @@ nav{
 .theme-toggle:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible{
   outline:2px solid var(--cyan); outline-offset:2px;
 }
-/* Sticky APK promo strip: sits under the nav, always visible, links to #apk-section */
+/* Sticky install promo strip: sits under the nav, always visible, links to #install-section */
 .apk-strip{
   display:flex; align-items:center; justify-content:center; gap:8px;
   background:var(--grad); color:#fff; text-decoration:none;
@@ -388,11 +397,13 @@ section{ padding:64px 0; }
 .apk-changelog ul{ margin:10px 0 0 18px; color:var(--text-dim); line-height:1.7; }
 .apk-install-btn{
   display:inline-flex; align-items:center; gap:8px; margin-top:18px;
-  background:var(--grad); color:#fff; text-decoration:none;
+  background:var(--grad); color:#fff; text-decoration:none; border:none;
+  font-family:'Inter',system-ui,sans-serif;
   font-weight:700; font-size:.92rem; padding:13px 24px; border-radius:14px;
-  transition:transform .15s ease;
+  cursor:pointer; transition:transform .15s ease, opacity .15s ease;
 }
 .apk-install-btn:hover{ transform:translateY(-2px); }
+.apk-install-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
 .apk-note{ margin-top:10px; font-size:.78rem; color:var(--text-dim); }
 
 .grid-features{
@@ -495,10 +506,10 @@ footer{
     <div class="brand"><span class="mark"></span> Jamali4U</div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   </div>
-  <!-- Sticky APK download strip: replace href="#apk-section" logic / the button below
-       with a real .apk URL once the app file is hosted (e.g. GitHub Releases). -->
-  <a href="#apk-section" class="apk-strip" aria-label="Download the Jamali4U Android app">
-    📲 Get the Android App (APK) — Free, No Ads Inside App <span class="apk-strip-arrow">→</span>
+  <!-- Install strip: triggers the native PWA install prompt captured below,
+       or scrolls to instructions if the browser doesn't support it. -->
+  <a href="#install-section" class="apk-strip" id="installStrip" aria-label="Install Jamali4U as an app">
+    📲 Install Web App — Faster, Works Offline <span class="apk-strip-arrow">→</span>
   </a>
 </nav>
 
@@ -565,34 +576,36 @@ footer{
   </div>
 </div>
 
-<section class="wrap" id="apk-section">
+<section class="wrap" id="install-section">
   <div class="apk-card">
     <div class="apk-icon">📲</div>
     <div class="apk-info">
-      <h2>Jamali4U — Android App</h2>
-      <p class="apk-tagline">Download TikTok videos faster with the native app.</p>
+      <h2>Jamali4U — Install as an App</h2>
+      <p class="apk-tagline">Add Jamali4U to your home screen for one-tap access, an app-like feel, and offline support for the app shell.</p>
       <div class="apk-meta">
-        <span>Version <b>1.0.0</b></span>
-        <span>Size <b>4.8 MB</b></span>
-        <span>Requires <b>Android 6.0+</b></span>
+        <span>Type <b>Progressive Web App</b></span>
+        <span>Size <b>&lt; 1 MB</b></span>
+        <span>Works on <b>Android &amp; Desktop</b></span>
       </div>
       <details class="apk-changelog">
-        <summary>What's new</summary>
+        <summary>What you get</summary>
         <ul>
-          <li>Faster no-watermark downloads</li>
-          <li>Dark mode support</li>
-          <li>Bug fixes and performance improvements</li>
+          <li>Opens in its own window, no browser bar</li>
+          <li>Home screen icon, just like a native app</li>
+          <li>Loads instantly on repeat visits (cached app shell)</li>
+          <li>Offline screen if your connection drops mid-browse</li>
         </ul>
       </details>
-      <!--
-        IMPORTANT: this button is a placeholder. Point href to the real .apk file
-        once it's built and hosted (GitHub Releases is a free option), e.g.:
-        href="https://github.com/mblachi/Jamali4u/releases/download/v1.0.0/jamali4u.apk"
-        Do not publish this button live pointing to "#" — a non-functional download
-        button is misleading to visitors.
-      -->
-      <a href="#" class="apk-install-btn" id="apkInstallBtn">⬇ Install APK</a>
-      <p class="apk-note">Not available yet — app is in development.</p>
+
+      <button id="installBtn" class="apk-install-btn" type="button">⬇ Install Web App</button>
+
+      <!-- Shown automatically when the browser doesn't support the native
+           install prompt (mainly iOS Safari) — gives manual steps instead. -->
+      <div id="manualInstallNote" class="apk-note" style="display:none;">
+        Your browser doesn't support one-tap install. To add Jamali4U to your home screen:
+        tap the <b>Share</b> icon, then choose <b>Add to Home Screen</b>.
+      </div>
+      <p id="installedNote" class="apk-note" style="display:none;">✅ Already installed on this device.</p>
     </div>
   </div>
 </section>
@@ -726,6 +739,79 @@ footer{
     toggle.textContent = theme === 'dark' ? '🌙' : '☀️';
   });
 })();
+
+// ---------- PWA: service worker registration ----------
+// Registers the app-shell cache/offline worker. Safe to no-op if unsupported.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((err) => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+
+// ---------- PWA: native install prompt (beforeinstallprompt) ----------
+// Chrome/Edge/Samsung Internet on Android and desktop fire this event when
+// the site qualifies as installable. We capture it, stop the browser's
+// default mini-infobar, and trigger it ourselves from our own button.
+let deferredInstallPrompt = null;
+const installBtn = document.getElementById('installBtn');
+const installStrip = document.getElementById('installStrip');
+const manualInstallNote = document.getElementById('manualInstallNote');
+const installedNote = document.getElementById('installedNote');
+
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true; // iOS Safari flag
+}
+
+if (isStandalone()) {
+  // Already running as an installed app — no need to prompt.
+  installBtn.style.display = 'none';
+  installedNote.style.display = 'block';
+  if (installStrip) installStrip.style.display = 'none';
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();          // stop the default browser mini-infobar
+  deferredInstallPrompt = event;   // save it so our button can trigger it later
+  installBtn.disabled = false;
+});
+
+installBtn.addEventListener('click', async () => {
+  if (deferredInstallPrompt) {
+    // Native install path (Chrome/Edge/Samsung Internet on Android & desktop)
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    if (choice.outcome === 'accepted') {
+      installBtn.textContent = '✅ Installed';
+      installBtn.disabled = true;
+    }
+    deferredInstallPrompt = null;
+  } else {
+    // Browser doesn't support beforeinstallprompt (e.g. iOS Safari, Firefox) —
+    // show manual "Add to Home Screen" instructions instead.
+    manualInstallNote.style.display = 'block';
+    manualInstallNote.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+
+// If the browser later confirms installation actually completed, reflect that in the UI.
+window.addEventListener('appinstalled', () => {
+  installBtn.textContent = '✅ Installed';
+  installBtn.disabled = true;
+  if (installStrip) installStrip.style.display = 'none';
+});
+
+if (installStrip) {
+  installStrip.addEventListener('click', (e) => {
+    if (deferredInstallPrompt) {
+      e.preventDefault();          // don't just scroll — install right away
+      installBtn.click();
+    }
+    // otherwise let the default #install-section anchor scroll happen
+  });
+}
 
 const RAPIDAPI_KEY = "f92f85abf4msh190e0731f77fd16p19fab7jsn19299df9bc97";
 const RAPIDAPI_HOST = "tiktok-video-no-watermark2.p.rapidapi.com";
