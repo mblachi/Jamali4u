@@ -949,10 +949,25 @@ const PLATFORMS = {
     label: 'Instagram',
     placeholder: 'Paste Instagram Reel / Post URL',
     match: (url) => url.includes('instagram.com'),
-    key: 'YOUR_INSTAGRAM_RAPIDAPI_KEY',   // TODO: replace after subscribing
-    host: 'YOUR_INSTAGRAM_RAPIDAPI_HOST', // TODO: replace after subscribing
-    buildUrl: (host, link) => `https://${host}/?url=${encodeURIComponent(link)}`,
-    parse: (data) => null // TODO: fill in once we see a real response sample
+    key: 'f92f85abf4msh190e0731f77fd16p19fab7jsn19299df9bc97',
+    host: 'instagram-reels-downloader-api.p.rapidapi.com',
+    buildUrl: (host, link) => `https://${host}/download?url=${encodeURIComponent(link)}`,
+    parse: (data) => {
+      if (!data || !data.success || !data.data) return null;
+      const d = data.data;
+      const medias = d.medias || [];
+      // Prefer an item that looks like an actual video file; fall back to the first item.
+      const videoMedia = medias.find((m) => m.url && m.url.includes('.mp4')) || medias[0];
+      return {
+        title: d.title || 'Instagram Video',
+        author: d.author || '',
+        duration: 0,
+        cover: d.thumbnail || '',
+        noWatermarkUrl: videoMedia ? videoMedia.url : '',
+        hdUrl: videoMedia ? videoMedia.url : '',
+        mp3Url: '' // this API doesn't return a separate audio-only track
+      };
+    }
   }
 };
 
