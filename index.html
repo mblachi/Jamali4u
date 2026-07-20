@@ -923,10 +923,27 @@ const PLATFORMS = {
     label: 'Facebook',
     placeholder: 'Paste Facebook Video URL',
     match: (url) => url.includes('facebook.com') || url.includes('fb.watch'),
-    key: 'YOUR_FACEBOOK_RAPIDAPI_KEY',   // TODO: replace after subscribing
-    host: 'YOUR_FACEBOOK_RAPIDAPI_HOST', // TODO: replace after subscribing
-    buildUrl: (host, link) => `https://${host}/?url=${encodeURIComponent(link)}`,
-    parse: (data) => null // TODO: fill in once we see a real response sample
+    key: 'f92f85abf4msh190e0731f77fd16p19fab7jsn19299df9bc97',
+    host: 'facebook17.p.rapidapi.com',
+    // This API takes the link in a JSON POST body, not a query string.
+    method: 'POST',
+    buildUrl: (host) => `https://${host}/api/facebook/links`,
+    buildBody: (link) => JSON.stringify({ url: link }),
+    parse: (data) => {
+      if (!data || data.status !== 200 || !data.direct_media_url) return null;
+      const kind = data.media_type
+        ? data.media_type.charAt(0).toUpperCase() + data.media_type.slice(1)
+        : 'Video';
+      return {
+        title: `Facebook ${kind}`,
+        author: '',
+        duration: 0,
+        cover: data.thumbnail || '',
+        noWatermarkUrl: data.direct_media_url,
+        hdUrl: data.direct_media_url,
+        mp3Url: '' // this API doesn't return a separate audio-only track
+      };
+    }
   },
   instagram: {
     label: 'Instagram',
@@ -1109,13 +1126,21 @@ async function handleDownload(){
 
   try{
     const apiUrl = platform.buildUrl(platform.host, link);
-    const response = await fetch(apiUrl, {
-      method: 'GET',
+    const method = platform.method || 'GET';
+    const fetchOptions = {
+      method,
       headers: {
         'X-RapidAPI-Key': platform.key,
         'X-RapidAPI-Host': platform.host
       }
-    });
+    };
+    // Some platform APIs (like Facebook's) expect the link as a JSON POST body
+    // instead of a query string — buildBody supplies that when present.
+    if (method === 'POST' && platform.buildBody) {
+      fetchOptions.headers['Content-Type'] = 'application/json';
+      fetchOptions.body = platform.buildBody(link);
+    }
+    const response = await fetch(apiUrl, fetchOptions);
     if(!response.ok) throw new Error('Request failed (' + response.status + ')');
     const data = await response.json();
     const parsed = platform.parse(data);
